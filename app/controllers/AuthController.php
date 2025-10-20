@@ -29,6 +29,13 @@ class AuthController extends Controller
         ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Verify CSRF token
+            if (!FormHelper::verifyCsrf($_POST['csrf_token'] ?? '')) {
+                $this->setFlash('error', 'Invalid request. Please try again.');
+                $this->redirect('auth/login');
+                return;
+            }
+
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
 
@@ -85,7 +92,15 @@ class AuthController extends Controller
         ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = trim($_POST['username'] ?? '');
+            // Verify CSRF token
+            if (!FormHelper::verifyCsrf($_POST['csrf_token'] ?? '')) {
+                $this->setFlash('error', 'Invalid request. Please try again.');
+                $this->redirect('auth/register');
+                return;
+            }
+
+            // Get raw inputs (don't trim username yet - validate first to catch spaces)
+            $username = $_POST['username'] ?? '';
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirm_password'] ?? '';
@@ -94,17 +109,25 @@ class AuthController extends Controller
             $role = $_POST['role'] ?? 'student';
             $phone = trim($_POST['phone'] ?? '');
 
-            // Validate inputs
+            // Validate inputs using helper (strict regex policies)
             $errors = [];
-            if (empty($username)) $errors[] = 'Username is required';
-            if (empty($email)) $errors[] = 'Email is required';
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email is required';
-            if (empty($password)) $errors[] = 'Password is required';
-            if (strlen($password) < 6) $errors[] = 'Password must be at least 6 characters';
-            if ($password !== $confirmPassword) $errors[] = 'Passwords do not match';
-            if (empty($firstName)) $errors[] = 'First name is required';
-            if (empty($lastName)) $errors[] = 'Last name is required';
+            $validator = new ValidationHelper();
+            if ($validator->required($username, 'Username')) {
+                $validator->validateUsernameStrict($username, 'Username');
+            }
+            // After validation, trim username for storage (only if valid)
+            $username = trim($username);
+            if ($validator->required($email, 'Email')) {
+                $validator->validateEmailAllowedDomains($email, 'Email');
+            }
+            if ($validator->required($password, 'Password')) {
+                $validator->validatePasswordStrong($password, 'Password');
+            }
+            $validator->match($password, $confirmPassword, 'Passwords');
+            $validator->required($firstName, 'First name');
+            $validator->required($lastName, 'Last name');
             if (!in_array($role, ['student', 'counselor'])) $errors[] = 'Invalid role selected';
+            $errors = array_merge($errors, $validator->getErrors());
 
             // Check if username/email already exists
             if (empty($errors)) {

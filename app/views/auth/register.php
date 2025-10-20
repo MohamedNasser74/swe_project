@@ -20,6 +20,7 @@
                     <?php endif; ?>
 
                     <form method="POST" action="<?= APP_URL ?>/auth/register">
+                        <input type="hidden" name="csrf_token" value="<?= FormHelper::csrfToken() ?>">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="first_name" class="form-label">First Name</label>
@@ -39,9 +40,9 @@
                             <label for="username" class="form-label">Username</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                <input type="text" class="form-control" id="username" name="username" 
-                                       value="<?= htmlspecialchars($form_data['username'] ?? '') ?>" 
-                                       placeholder="Choose a username" required>
+                    <input type="text" class="form-control" id="username" name="username" 
+                        value="<?= htmlspecialchars($form_data['username'] ?? '') ?>" 
+                        placeholder="Choose a username" required pattern="^[A-Za-z0-9]{3,}$" title="At least 3 characters, letters and numbers only (no spaces or symbols)">
                             </div>
                         </div>
 
@@ -49,9 +50,9 @@
                             <label for="email" class="form-label">Email Address</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                <input type="email" class="form-control" id="email" name="email" 
-                                       value="<?= htmlspecialchars($form_data['email'] ?? '') ?>" 
-                                       placeholder="Enter your email" required>
+                    <input type="email" class="form-control" id="email" name="email" 
+                        value="<?= htmlspecialchars($form_data['email'] ?? '') ?>" 
+                        placeholder="Enter your email" required pattern="^[^@\s]+@(gmail\.com|icloud\.com|yahoo\.com|outlook\.com|hotmail\.com)$" title="Use gmail.com, icloud.com, yahoo.com, outlook.com, or hotmail.com">
                             </div>
                         </div>
 
@@ -83,10 +84,10 @@
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" class="form-control" id="password" name="password" 
-                                           placeholder="Create a password" required>
+                     <input type="password" class="form-control" id="password" name="password" 
+                         placeholder="Create a password" required pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$" title="Min 8 chars with uppercase, lowercase, number, and special character">
                                 </div>
-                                <small class="text-muted">Minimum 6 characters</small>
+                    <small class="text-muted">Min 8 chars with uppercase, lowercase, number, and special character</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="confirm_password" class="form-label">Confirm Password</label>
