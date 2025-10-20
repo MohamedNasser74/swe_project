@@ -1,0 +1,7 @@
+{
+  "name": "local/project-test1",
+  "description": "Virtual Career Counseling Platform",
+  "require": {
+    "phpmailer/phpmailer": "^6.8"
+  }
+}

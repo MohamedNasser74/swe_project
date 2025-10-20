@@ -1,0 +1,10 @@
+Virtual Career Platform Image - This is a placeholder for the image you provided. 
+To add your actual image:
+1. Save the image you shared as 'slide1.jpg' 
+2. Copy it to: d:\Xampp\htdocs\project test1\public\images\slideshow\slide1.jpg
+3. The slideshow will automatically use it!
+
+You can add more images as:
+- slide2.jpg
+- slide3.jpg  
+- slide4.jpg
