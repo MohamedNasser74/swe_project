@@ -29,6 +29,13 @@ class AuthController extends Controller
         ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Verify CSRF token
+            if (!FormHelper::verifyCsrf($_POST['csrf_token'] ?? '')) {
+                $this->setFlash('error', 'Invalid request. Please try again.');
+                $this->redirect('auth/login');
+                return;
+            }
+
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
 
@@ -85,6 +92,13 @@ class AuthController extends Controller
         ];
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Verify CSRF token
+            if (!FormHelper::verifyCsrf($_POST['csrf_token'] ?? '')) {
+                $this->setFlash('error', 'Invalid request. Please try again.');
+                $this->redirect('auth/register');
+                return;
+            }
+
             $username = trim($_POST['username'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
@@ -97,6 +111,7 @@ class AuthController extends Controller
             // Validate inputs
             $errors = [];
             if (empty($username)) $errors[] = 'Username is required';
+            if (strlen($username) < 3) $errors[] = 'Username must be at least 3 characters';
             if (empty($email)) $errors[] = 'Email is required';
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email is required';
             if (empty($password)) $errors[] = 'Password is required';

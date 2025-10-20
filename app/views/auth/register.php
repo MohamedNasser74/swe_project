@@ -20,6 +20,7 @@
                     <?php endif; ?>
 
                     <form method="POST" action="<?= APP_URL ?>/auth/register">
+                        <input type="hidden" name="csrf_token" value="<?= FormHelper::csrfToken() ?>">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="first_name" class="form-label">First Name</label>
