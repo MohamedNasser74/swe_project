@@ -87,7 +87,7 @@
                                     <input type="password" class="form-control" id="password" name="password" 
                                            placeholder="Create a password" required>
                                 </div>
-                                <small class="text-muted">Minimum 6 characters</small>
+                                <small class="text-muted">Minimum 8 characters, must include uppercase, lowercase, and special character</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="confirm_password" class="form-label">Confirm Password</label>
