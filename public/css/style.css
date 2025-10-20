@@ -1,0 +1,417 @@
+/* Custom Styles for Virtual Career Counseling Platform */
+
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+    min-height: 500px;
+}
+
+/* Cards */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    margin: 0 5px;
+    transition: color 0.3s ease;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.input-group-text {
+    border-radius: 10px 0 0 10px;
+    border: 2px solid #e9ecef;
+    border-right: none;
+    background-color: #f8f9fa;
+}
+
+.form-select {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+}
+
+/* Dashboard Styles */
+.dashboard-card {
+    border-left: 4px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    border-left-color: var(--success-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+}
+
+/* Table Styles */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75em;
+    padding: 0.5em 0.75em;
+    border-radius: 25px;
+}
+
+/* Status Badges */
+.status-scheduled { background-color: var(--info-color); }
+.status-confirmed { background-color: var(--primary-color); }
+.status-completed { background-color: var(--success-color); }
+.status-cancelled { background-color: var(--danger-color); }
+.status-active { background-color: var(--success-color); }
+.status-inactive { background-color: var(--secondary-color); }
+
+/* Footer */
+footer {
+    background: linear-gradient(135deg, var(--dark-color) 0%, #212529 100%);
+}
+
+footer a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 400px;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .btn {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Loading Spinner */
+.spinner-border-custom {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+
+/* Alert Styles */
+.alert {
+    border-radius: 10px;
+    border: none;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+    color: #856404;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #0c5460;
+}
+
+/* Profile Image */
+.profile-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Calendar Styles */
+.calendar-day {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    min-height: 80px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.calendar-day:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.calendar-day.has-appointment {
+    background-color: rgba(40, 167, 69, 0.1);
+    border-color: var(--success-color);
+}
+
+/* Forum Styles */
+.forum-topic {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.forum-topic:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.forum-topic.pinned {
+    border-left: 4px solid var(--warning-color);
+    background-color: rgba(255, 193, 7, 0.05);
+}
+
+/* Slideshow Styles */
+#heroCarousel {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.slideshow-img {
+    height: 450px;
+    object-fit: cover;
+    border-radius: 20px;
+    filter: brightness(0.85);
+    transition: all 0.3s ease;
+}
+
+#heroCarousel:hover .slideshow-img {
+    filter: brightness(0.95);
+    transform: scale(1.02);
+}
+
+.carousel-item {
+    transition: transform 0.8s ease-in-out;
+}
+
+.carousel-indicators {
+    bottom: 20px;
+}
+
+.carousel-indicators button {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: transparent;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.carousel-indicators button.active {
+    background-color: white;
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 8%;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-size: 25px 25px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.carousel-caption {
+    bottom: 40px;
+    left: 8%;
+    right: 8%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.carousel-caption .bg-gradient {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.carousel-caption h5 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.carousel-caption p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+/* Slideshow animation effects */
+.carousel-item-next.carousel-item-start,
+.carousel-item-prev.carousel-item-end {
+    transform: translateX(0);
+}
+
+.carousel-item-next,
+.active.carousel-item-end {
+    transform: translateX(100%);
+}
+
+.carousel-item-prev,
+.active.carousel-item-start {
+    transform: translateX(-100%);
+}
+
+/* Responsive slideshow */
+@media (max-width: 768px) {
+    .slideshow-img {
+        height: 250px;
+    }
+    
+    .carousel-caption {
+        bottom: 10px;
+        left: 5%;
+        right: 5%;
+    }
+    
+    .carousel-caption h5 {
+        font-size: 1rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 0.8rem;
+        margin-bottom: 0;
+    }
+}
