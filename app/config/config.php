@@ -11,7 +11,7 @@ define('DB_NAME', 'career_counseling_platform');
 
 // Application settings
 define('APP_NAME', 'Virtual Career Counseling Platform');
-define('APP_URL', 'http://localhost/project%20test3/public');
+define('APP_URL', 'http://localhost/project%20test1/public');
 define('APP_VERSION', '1.0.0');
 
 // Email configuration (for later implementation)
