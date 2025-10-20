@@ -1,8 +1,4 @@
 <?php
-/**
- * Virtual Career Counseling Platform
- * Entry Point - Front Controller
- */
 
 // Define root path
 define('ROOT_PATH', dirname(__DIR__));
