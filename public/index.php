@@ -46,9 +46,6 @@ spl_autoload_register(function($class) {
 // Load configuration
 require_once APP_PATH . '/config/config.php';
 
-// Load constants
-require_once APP_PATH . '/constants/Constants.php';
-
 // If Composer autoload exists (PHPMailer installed), include it so Mailer can use it
 $composerAutoload = ROOT_PATH . '/vendor/autoload.php';
 if (file_exists($composerAutoload)) {
