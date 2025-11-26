@@ -218,13 +218,8 @@ class CounselorController extends Controller
     public function resources()
     {
         $this->requireRole('counselor');
-
-        $data = [
-            'title' => 'Resources - ' . APP_NAME,
-            'page_title' => 'Counselor Resources'
-        ];
-
-        $this->view('counselor/resources', $data);
+        header('Location: ' . APP_URL . '/resources.php');
+        exit;
     }
 }
 ?>

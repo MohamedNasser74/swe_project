@@ -20,6 +20,27 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Counselor-managed student records
+CREATE TABLE students (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    counselor_id INT NOT NULL,
+    name VARCHAR(120) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone VARCHAR(30),
+    profile_image VARCHAR(255),
+    education_level VARCHAR(120),
+    specialization VARCHAR(150),
+    status ENUM('active', 'inactive', 'completed') DEFAULT 'active',
+    join_date DATE DEFAULT NULL,
+    last_session_date DATE DEFAULT NULL,
+    total_sessions INT DEFAULT 0,
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY idx_students_counselor_email (counselor_id, email),
+    CONSTRAINT fk_students_counselor FOREIGN KEY (counselor_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Student profiles
 CREATE TABLE student_profiles (
     id INT PRIMARY KEY AUTO_INCREMENT,
