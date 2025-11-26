@@ -3,6 +3,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize dark mode
+    initializeDarkMode();
+    
     // Initialize tooltips
     initializeTooltips();
     
@@ -24,6 +27,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize slideshow
     initializeSlideshow();
 });
+
+/**
+ * Initialize Dark Mode Toggle
+ */
+function initializeDarkMode() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const darkModeIcon = document.getElementById('darkModeIcon');
+    const body = document.body;
+    
+    if (!darkModeToggle || !darkModeIcon) return;
+    
+    // Check localStorage for saved theme preference
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Apply saved theme on page load
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+        darkModeIcon.classList.remove('fa-moon');
+        darkModeIcon.classList.add('fa-sun');
+    }
+    
+    // Toggle dark mode on button click
+    darkModeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        
+        // Update icon
+        if (body.classList.contains('dark-mode')) {
+            darkModeIcon.classList.remove('fa-moon');
+            darkModeIcon.classList.add('fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            darkModeIcon.classList.remove('fa-sun');
+            darkModeIcon.classList.add('fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
+    });
+}
 
 /**
  * Initialize Bootstrap tooltips

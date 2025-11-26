@@ -48,6 +48,13 @@
                         </a>
                     </li>
                 <?php endif; ?>
+                
+                <!-- Dark Mode Toggle -->
+                <li class="nav-item">
+                    <button class="btn btn-sm btn-outline-light ms-2" id="darkModeToggle" title="Toggle Dark Mode">
+                        <i class="fas fa-moon" id="darkModeIcon"></i>
+                    </button>
+                </li>
             </ul>
         </div>
     </div>
