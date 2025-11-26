@@ -236,6 +236,50 @@ class Appointment extends Model
     }
 
     /**
+     * Get all appointments with optional filters for admin
+     */
+    public function getAllAppointments($status = null, $counselorId = null, $studentId = null)
+    {
+        $conditions = [];
+        $params = [];
+
+        if ($status !== null && $status !== '') {
+            $conditions[] = "a.status = :status";
+            $params[':status'] = $status;
+        }
+
+        if ($counselorId !== null && $counselorId !== '') {
+            $conditions[] = "a.counselor_id = :counselor_id";
+            $params[':counselor_id'] = (int)$counselorId;
+        }
+
+        if ($studentId !== null && $studentId !== '') {
+            $conditions[] = "a.student_id = :student_id";
+            $params[':student_id'] = (int)$studentId;
+        }
+
+        $sql = "SELECT a.*,
+                       CONCAT(s.first_name, ' ', s.last_name) as student_name,
+                       CONCAT(c.first_name, ' ', c.last_name) as counselor_name
+                FROM {$this->table} a
+                JOIN users s ON a.student_id = s.id
+                JOIN users c ON a.counselor_id = c.id";
+
+        if (!empty($conditions)) {
+            $sql .= ' WHERE ' . implode(' AND ', $conditions);
+        }
+
+        $sql .= ' ORDER BY a.created_at DESC';
+
+        $this->db->query($sql);
+        foreach ($params as $key => $value) {
+            $this->db->bind($key, $value);
+        }
+
+        return $this->db->resultSet();
+    }
+
+    /**
      * Get counselor appointments with filter
      */
     public function getCounselorAppointments($counselorId, $status = 'all')

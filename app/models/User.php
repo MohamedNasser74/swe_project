@@ -89,6 +89,38 @@ class User extends Model
     }
 
     /**
+     * Get all users with optional role/status filters
+     */
+    public function getAllUsers($role = null, $status = null)
+    {
+        $conditions = [];
+        $params = [];
+
+        if ($role !== null && $role !== '') {
+            $conditions[] = "role = :role";
+            $params[':role'] = $role;
+        }
+
+        if ($status !== null && $status !== '') {
+            $conditions[] = "status = :status";
+            $params[':status'] = $status;
+        }
+
+        $sql = "SELECT * FROM {$this->table}";
+        if (!empty($conditions)) {
+            $sql .= ' WHERE ' . implode(' AND ', $conditions);
+        }
+        $sql .= ' ORDER BY created_at DESC';
+
+        $this->db->query($sql);
+        foreach ($params as $key => $value) {
+            $this->db->bind($key, $value);
+        }
+
+        return $this->db->resultSet();
+    }
+
+    /**
      * Get counselor's students (students who have had appointments)
      */
     public function getCounselorStudents($counselorId)
