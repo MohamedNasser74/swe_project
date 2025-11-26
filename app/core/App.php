@@ -23,10 +23,15 @@ class App
         require_once APP_PATH . '/controllers/' . $this->controller . '.php';
         $this->controller = new $this->controller;
 
-        // Check if method exists
-        if (isset($url[1]) && method_exists($this->controller, $url[1])) {
-            $this->method = $url[1];
-            unset($url[1]);
+        // Check if method exists (convert hyphenated URLs to camelCase)
+        if (isset($url[1])) {
+            // Convert hyphenated method names to camelCase
+            $methodName = $this->convertToCamelCase($url[1]);
+            
+            if (method_exists($this->controller, $methodName)) {
+                $this->method = $methodName;
+                unset($url[1]);
+            }
         }
 
         // Get parameters
@@ -42,6 +47,20 @@ class App
             return explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL));
         }
         return [];
+    }
+
+    /**
+     * Convert hyphenated URL segments to camelCase method names
+     * Example: book-appointment -> bookAppointment
+     */
+    private function convertToCamelCase($string)
+    {
+        // Replace hyphens with spaces, capitalize each word, then remove spaces
+        $string = str_replace('-', ' ', $string);
+        $string = ucwords($string);
+        $string = str_replace(' ', '', $string);
+        // Make first character lowercase
+        return lcfirst($string);
     }
 }
 ?>

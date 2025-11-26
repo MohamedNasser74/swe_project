@@ -184,7 +184,7 @@
                                 <i class="fas fa-handshake fa-2x text-success mb-2"></i>
                                 <h6>Interview Tips</h6>
                                 <p class="text-muted small">Ace your interviews</p>
-                                <a href="#" class="btn btn-outline-success btn-sm">Learn More</a>
+                                <a href="<?= APP_URL ?>/student/interview-tips" class="btn btn-outline-success btn-sm">Learn More</a>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -192,7 +192,7 @@
                                 <i class="fas fa-briefcase fa-2x text-primary mb-2"></i>
                                 <h6>Job Opportunities</h6>
                                 <p class="text-muted small">Find your next role</p>
-                                <a href="<?= APP_URL ?>/student/job-search" class="btn btn-outline-primary btn-sm">Search Jobs</a>
+                                <a href="<?= APP_URL ?>/student/job-opportunities" class="btn btn-outline-primary btn-sm">Search Jobs</a>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -200,7 +200,7 @@
                                 <i class="fas fa-certificate fa-2x text-info mb-2"></i>
                                 <h6>Skill Development</h6>
                                 <p class="text-muted small">Enhance your skills</p>
-                                <a href="#" class="btn btn-outline-info btn-sm">Get Started</a>
+                                <a href="<?= APP_URL ?>/student/skill-development" class="btn btn-outline-info btn-sm">Get Started</a>
                             </div>
                         </div>
                     </div>

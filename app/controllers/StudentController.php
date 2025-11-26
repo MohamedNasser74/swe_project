@@ -11,6 +11,12 @@ class StudentController extends Controller
         $this->appointmentModel = $this->model('Appointment');
     }
 
+    public function index()
+    {
+        // Redirect to dashboard as the default student page
+        $this->redirect('student/dashboard');
+    }
+
     public function dashboard()
     {
         $this->requireRole('student');
@@ -200,6 +206,48 @@ class StudentController extends Controller
         ];
 
         $this->view('student/jobs', $data);
+    }
+
+    public function bookSession()
+    {
+        // Alias for bookAppointment to match routing
+        $this->bookAppointment();
+    }
+
+    public function interviewTips()
+    {
+        $this->requireRole('student');
+
+        $data = [
+            'title' => 'Interview Tips - ' . APP_NAME,
+            'page_title' => 'Interview Preparation Tips'
+        ];
+
+        $this->view('student/interview-tips', $data);
+    }
+
+    public function jobOpportunities()
+    {
+        $this->requireRole('student');
+
+        $data = [
+            'title' => 'Job Opportunities - ' . APP_NAME,
+            'page_title' => 'Career Opportunities'
+        ];
+
+        $this->view('student/job-opportunities', $data);
+    }
+
+    public function skillDevelopment()
+    {
+        $this->requireRole('student');
+
+        $data = [
+            'title' => 'Skill Development - ' . APP_NAME,
+            'page_title' => 'Enhance Your Skills'
+        ];
+
+        $this->view('student/skill-development', $data);
     }
 }
 ?>
