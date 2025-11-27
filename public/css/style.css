@@ -378,6 +378,55 @@ footer a:hover {
     line-height: 1.4;
 }
 
+/* Learn More Page */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+}
+
+.learn-hero {
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    overflow: hidden;
+}
+
+.learn-hero-card {
+    border-radius: 24px;
+}
+
+.impact-card {
+    background-color: #f8f9fa;
+}
+
+.pillar-card .icon-circle {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background-color: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.timeline-card {
+    border: 1px solid #e9ecef;
+}
+
+.timeline-step .timeline-marker {
+    min-width: 80px;
+}
+
+.timeline-step h5 {
+    color: #0d6efd;
+}
+
+@media (max-width: 768px) {
+    .learn-hero {
+        border-radius: 0;
+    }
+}
+
 /* Slideshow animation effects */
 .carousel-item-next.carousel-item-start,
 .carousel-item-prev.carousel-item-end {

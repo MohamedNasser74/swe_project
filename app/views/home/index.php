@@ -201,9 +201,12 @@
                 <p class="lead mb-4">Join thousands of students who have successfully launched their careers with our expert guidance and comprehensive resources.</p>
                 <?php if (!isset($_SESSION['user_id'])): ?>
                     <a href="<?= APP_URL ?>/auth/register" class="btn btn-light btn-lg me-3">Start Your Journey</a>
-                    <a href="<?= APP_URL ?>/home/about" class="btn btn-outline-light btn-lg">Learn More</a>
-                <?php else: ?>
+                    <a href="<?= APP_URL ?>/home/learn-more" class="btn btn-outline-light btn-lg">Learn More</a>
+                <?php elseif ($_SESSION['user_role'] === 'student'): ?>
                     <a href="<?= APP_URL ?>/student/book-appointment" class="btn btn-light btn-lg me-3">Book Your Session</a>
+                    <a href="<?= APP_URL ?>/home/services" class="btn btn-outline-light btn-lg">Explore Services</a>
+                <?php else: ?>
+                    <a href="<?= APP_URL ?>/<?= $_SESSION['user_role'] ?>/dashboard" class="btn btn-light btn-lg me-3">Go to Dashboard</a>
                     <a href="<?= APP_URL ?>/home/services" class="btn btn-outline-light btn-lg">Explore Services</a>
                 <?php endif; ?>
             </div>

@@ -9,6 +9,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= APP_URL ?>">
+                        <i class="fas fa-home me-1"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= APP_URL ?>/home/learn-more">
+                        <i class="fas fa-book-open me-1"></i>Learn More
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= APP_URL ?>/home/services">
+                        <i class="fas fa-briefcase me-1"></i>Services
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= APP_URL ?>/home/contact">
+                        <i class="fas fa-envelope me-1"></i>Contact
+                    </a>
+                </li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
