@@ -117,7 +117,7 @@ class CounselorController extends Controller
 
             $updateData = [
                 'status' => $status,
-                'counselor_notes' => $notes
+                'notes' => $notes
             ];
 
             if ($this->appointmentModel->updateAppointment($appointmentId, $updateData)) {

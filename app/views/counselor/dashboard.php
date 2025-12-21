@@ -115,23 +115,23 @@
                                                     <i class="fas fa-user text-primary"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="mb-1"><?= htmlspecialchars($appointment['student_name'] ?? 'Unknown Student') ?></h6>
+                                                    <h6 class="mb-1"><?= htmlspecialchars($appointment->student_name ?? 'Unknown Student') ?></h6>
                                                     <small class="text-muted">
                                                         <i class="fas fa-clock me-1"></i>
-                                                        <?= date('g:i A', strtotime($appointment['appointment_time'])) ?>
+                                                        <?= date('g:i A', strtotime($appointment->appointment_time)) ?>
                                                     </small>
                                                 </div>
                                             </div>
                                             <p class="mb-2 text-muted small">
-                                                <strong>Type:</strong> <?= ucwords(str_replace('-', ' ', $appointment['session_type'])) ?>
+                                                <strong>Type:</strong> <?= ucwords(str_replace('-', ' ', $appointment->session_type)) ?>
                                             </p>
-                                            <?php if (!empty($appointment['notes'])): ?>
-                                                <p class="mb-2 small"><?= htmlspecialchars($appointment['notes']) ?></p>
+                                            <?php if (!empty($appointment->notes)): ?>
+                                                <p class="mb-2 small"><?= htmlspecialchars($appointment->notes) ?></p>
                                             <?php endif; ?>
                                         </div>
                                         <div class="flex-shrink-0">
-                                            <span class="badge bg-<?= $appointment['status'] === 'confirmed' ? 'success' : ($appointment['status'] === 'pending' ? 'warning' : 'secondary') ?>">
-                                                <?= ucfirst($appointment['status']) ?>
+                                            <span class="badge bg-<?= $appointment->status === 'confirmed' ? 'success' : ($appointment->status === 'pending' ? 'warning' : 'secondary') ?>">
+                                                <?= ucfirst($appointment->status) ?>
                                             </span>
                                         </div>
                                     </div>
@@ -192,16 +192,16 @@
                                 <div class="list-group-item border-0 px-0 py-2">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h6 class="mb-1 small"><?= htmlspecialchars($appointment['student_name'] ?? 'Unknown') ?></h6>
+                                            <h6 class="mb-1 small"><?= htmlspecialchars($appointment->student_name ?? 'Unknown') ?></h6>
                                             <small class="text-muted">
-                                                <?= date('M j, g:i A', strtotime($appointment['appointment_date'] . ' ' . $appointment['appointment_time'])) ?>
+                                                <?= date('M j, g:i A', strtotime($appointment->appointment_date . ' ' . $appointment->appointment_time)) ?>
                                             </small>
                                         </div>
                                         <div class="btn-group" role="group">
-                                            <button class="btn btn-sm btn-success" onclick="updateAppointmentStatus(<?= $appointment['id'] ?>, 'confirmed')">
+                                            <button class="btn btn-sm btn-success" onclick="updateAppointmentStatus(<?= $appointment->id ?>, 'confirmed')">
                                                 <i class="fas fa-check"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-danger" onclick="updateAppointmentStatus(<?= $appointment['id'] ?>, 'cancelled')">
+                                            <button class="btn btn-sm btn-danger" onclick="updateAppointmentStatus(<?= $appointment->id ?>, 'cancelled')">
                                                 <i class="fas fa-times"></i>
                                             </button>
                                         </div>
@@ -245,22 +245,22 @@
                                     <div class="card border-1">
                                         <div class="card-body p-3">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
-                                                <h6 class="mb-0"><?= htmlspecialchars($appointment['student_name'] ?? 'Unknown') ?></h6>
-                                                <span class="badge bg-<?= $appointment['status'] === 'confirmed' ? 'success' : 'warning' ?> small">
-                                                    <?= ucfirst($appointment['status']) ?>
+                                                <h6 class="mb-0"><?= htmlspecialchars($appointment->student_name ?? 'Unknown') ?></h6>
+                                                <span class="badge bg-<?= $appointment->status === 'confirmed' ? 'success' : 'warning' ?> small">
+                                                    <?= ucfirst($appointment->status) ?>
                                                 </span>
                                             </div>
                                             <p class="text-muted small mb-2">
                                                 <i class="fas fa-calendar me-1"></i>
-                                                <?= date('M j, Y', strtotime($appointment['appointment_date'])) ?>
+                                                <?= date('M j, Y', strtotime($appointment->appointment_date)) ?>
                                             </p>
                                             <p class="text-muted small mb-2">
                                                 <i class="fas fa-clock me-1"></i>
-                                                <?= date('g:i A', strtotime($appointment['appointment_time'])) ?>
+                                                <?= date('g:i A', strtotime($appointment->appointment_time)) ?>
                                             </p>
                                             <p class="text-muted small mb-0">
                                                 <i class="fas fa-tag me-1"></i>
-                                                <?= ucwords(str_replace('-', ' ', $appointment['session_type'])) ?>
+                                                <?= ucwords(str_replace('-', ' ', $appointment->session_type)) ?>
                                             </p>
                                         </div>
                                     </div>

@@ -100,23 +100,23 @@ function sanitize(?string $value): string
                         <tbody>
                             <?php foreach ($appointments as $appointment): ?>
                                 <?php
-                                $statusKey = strtolower($appointment['status'] ?? '');
+                                $statusKey = strtolower($appointment->status ?? '');
                                 $badgeClass = 'bg-' . convertToBadgeClass($statusKey, $statusDefinitions);
                                 $statusLabel = $filterOptions[$statusKey] ?? ucfirst($statusKey ?: 'Unknown');
-                                $durationMinutes = isset($appointment['duration_minutes']) ? (int) $appointment['duration_minutes'] : (int) ($appointment['duration'] ?? 0);
+                                $durationMinutes = isset($appointment->duration_minutes) ? (int) $appointment->duration_minutes : (int) ($appointment->duration ?? 0);
                                 ?>
                                 <tr>
                                     <td>
-                                        <div class="fw-semibold"><?= sanitize($appointment['student_name'] ?? 'Student #' . ($appointment['student_id'] ?? '')) ?></div>
-                                        <?php if (!empty($appointment['student_email'])): ?>
+                                        <div class="fw-semibold"><?= sanitize($appointment->student_name ?? 'Student #' . ($appointment->student_id ?? '')) ?></div>
+                                        <?php if (!empty($appointment->student_email)): ?>
                                             <div class="small text-muted">
-                                                <i class="fas fa-envelope me-1"></i><?= sanitize($appointment['student_email']) ?>
+                                                <i class="fas fa-envelope me-1"></i><?= sanitize($appointment->student_email) ?>
                                             </div>
                                         <?php endif; ?>
                                     </td>
-                                    <td><?= formatDateTimeString($appointment['appointment_date'], $appointment['appointment_time']) ?></td>
+                                    <td><?= formatDateTimeString($appointment->appointment_date, $appointment->appointment_time) ?></td>
                                     <td><?= $durationMinutes ?> min</td>
-                                    <td><?= sanitize(ucwords(str_replace('_', ' ', $appointment['session_type'] ?? ''))) ?></td>
+                                    <td><?= sanitize(ucwords(str_replace('_', ' ', $appointment->session_type ?? ''))) ?></td>
                                     <td>
                                         <span class="badge <?= $badgeClass ?> bg-opacity-25 text-<?= convertToBadgeClass($statusKey, $statusDefinitions) ?>">
                                             <?= sanitize($statusLabel) ?>
@@ -124,12 +124,12 @@ function sanitize(?string $value): string
                                     </td>
                                     <td class="text-end">
                                         <div class="btn-group">
-                                            <a href="<?= APP_URL ?>/appointment_details.php?id=<?= (int) $appointment['id'] ?>" class="btn btn-sm btn-outline-primary" title="View details" target="_blank">
+                                            <a href="<?= APP_URL ?>/appointment_details.php?id=<?= (int) $appointment->id ?>" class="btn btn-sm btn-outline-primary" title="View details" target="_blank">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             <?php if (in_array($statusKey, ['scheduled', 'confirmed', 'pending'], true)): ?>
                                                 <form method="POST" action="<?= APP_URL ?>/counselor/updateAppointmentStatus" class="d-inline">
-                                                    <input type="hidden" name="appointment_id" value="<?= (int) $appointment['id'] ?>">
+                                                    <input type="hidden" name="appointment_id" value="<?= (int) $appointment->id ?>">
                                                     <input type="hidden" name="status" value="confirmed">
                                                     <button type="submit" class="btn btn-sm btn-outline-success" title="Confirm appointment" onclick="return confirm('Mark this appointment as confirmed?');">
                                                         <i class="fas fa-check"></i>
@@ -138,7 +138,7 @@ function sanitize(?string $value): string
                                             <?php endif; ?>
                                             <?php if (!in_array($statusKey, ['cancelled', 'completed', 'no_show'], true)): ?>
                                                 <form method="POST" action="<?= APP_URL ?>/counselor/updateAppointmentStatus" class="d-inline">
-                                                    <input type="hidden" name="appointment_id" value="<?= (int) $appointment['id'] ?>">
+                                                    <input type="hidden" name="appointment_id" value="<?= (int) $appointment->id ?>">
                                                     <input type="hidden" name="status" value="cancelled">
                                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Cancel appointment" onclick="return confirm('Cancel this appointment?');">
                                                         <i class="fas fa-times"></i>

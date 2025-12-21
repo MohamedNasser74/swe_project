@@ -158,6 +158,34 @@ INSERT INTO settings (setting_key, setting_value, description) VALUES
 ('max_appointment_duration', '120', 'Maximum appointment duration in minutes'),
 ('appointment_buffer_time', '30', 'Buffer time between appointments in minutes');
 
+-- Dynamic Menu (Self-Referencing for nested menus)
+CREATE TABLE menus (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    url VARCHAR(255) NOT NULL,
+    icon VARCHAR(50) DEFAULT NULL,
+    parent_id INT DEFAULT NULL,
+    sort_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT TRUE,
+    role_access ENUM('all', 'guest', 'student', 'counselor', 'admin') DEFAULT 'all',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (parent_id) REFERENCES menus(id) ON DELETE CASCADE
+);
+
 -- Create admin user (password: admin123 - hashed)
 INSERT INTO users (username, email, password, first_name, last_name, role, email_verified) VALUES
 ('admin', 'admin@careerplatform.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'System', 'Administrator', 'admin', TRUE);
+
+-- Insert default menu items
+INSERT INTO menus (title, url, icon, parent_id, sort_order, is_active, role_access) VALUES
+('Home', '/', 'fas fa-home', NULL, 1, TRUE, 'all'),
+('Learn More', '/home/learn-more', 'fas fa-book-open', NULL, 2, TRUE, 'all'),
+('Services', '/home/services', 'fas fa-briefcase', NULL, 3, TRUE, 'all'),
+('Contact', '/home/contact', 'fas fa-envelope', NULL, 4, TRUE, 'all');
+
+-- Get the ID of 'Services' to add sub-menu items (assuming it's ID 3)
+INSERT INTO menus (title, url, icon, parent_id, sort_order, is_active, role_access) VALUES
+('Career Guidance', '/home/services#career-guidance', 'fas fa-compass', 3, 1, TRUE, 'all'),
+('Interview Prep', '/home/services#interview-prep', 'fas fa-user-tie', 3, 2, TRUE, 'all'),
+('Job Search', '/home/services#job-search', 'fas fa-search', 3, 3, TRUE, 'all');
