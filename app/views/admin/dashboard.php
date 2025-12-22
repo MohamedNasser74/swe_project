@@ -174,6 +174,28 @@
                                 </div>
                             </a>
                         </div>
+                        <div class="col-lg-4 col-md-6">
+                            <a href="<?= APP_URL ?>/admin/menus" class="card text-decoration-none border-2 border-secondary h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-bars fa-lg"></i>
+                                    </div>
+                                    <h5 class="card-title text-secondary">Manage Menus</h5>
+                                    <p class="text-muted small mb-0">View and manage navigation menus</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <a href="<?= APP_URL ?>/admin/tests" class="card text-decoration-none border-2 border-danger h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-flask fa-lg"></i>
+                                    </div>
+                                    <h5 class="card-title text-danger">Unit Tests</h5>
+                                    <p class="text-muted small mb-0">Run automated unit tests</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

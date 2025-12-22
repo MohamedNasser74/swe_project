@@ -249,6 +249,26 @@ class AdminController extends Controller
     }
 
     /**
+     * Automated Unit Tests Page
+     */
+    public function tests()
+    {
+        $this->requireRole('admin');
+        
+        // Calculate root path (go up one level from app directory)
+        $rootPath = defined('ROOT_PATH') ? ROOT_PATH : dirname(APP_PATH);
+        $testRunnerPath = $rootPath . '/tests/run-tests.php';
+        
+        if (file_exists($testRunnerPath)) {
+            require_once $testRunnerPath;
+            exit; // Exit since run-tests.php outputs its own HTML
+        } else {
+            $this->setFlash('error', 'Test runner file not found.');
+            $this->redirect('admin/dashboard');
+        }
+    }
+
+    /**
      * Create new menu item
      */
     public function createMenu()
