@@ -184,30 +184,6 @@ class StudentController extends Controller
     }
 
 
-    public function jobSearch()
-    {
-        $this->requireRole('student');
-
-        $data = [
-            'title' => 'Job Search - ' . APP_NAME,
-            'page_title' => 'Find Your Dream Job'
-        ];
-
-        $this->view('student/jobs', $data);
-    }
-    
-    public function jobs()
-    {
-        $this->requireRole('student');
-
-        $data = [
-            'title' => 'Job Search - ' . APP_NAME,
-            'page_title' => 'Find Your Dream Job'
-        ];
-
-        $this->view('student/jobs', $data);
-    }
-
     public function bookSession()
     {
         // Alias for bookAppointment to match routing
@@ -226,18 +202,6 @@ class StudentController extends Controller
         $this->view('student/interview-tips', $data);
     }
 
-    public function jobOpportunities()
-    {
-        $this->requireRole('student');
-
-        $data = [
-            'title' => 'Job Opportunities - ' . APP_NAME,
-            'page_title' => 'Career Opportunities'
-        ];
-
-        $this->view('student/job-opportunities', $data);
-    }
-
     public function skillDevelopment()
     {
         $this->requireRole('student');
@@ -248,6 +212,34 @@ class StudentController extends Controller
         ];
 
         $this->view('student/skill-development', $data);
+    }
+    public function aiAdvisor()
+    {
+        $this->requireRole('student');
+        require_once APP_PATH . '/models/CareerAiService.php';
+
+        $data = [
+            'title' => 'AI Career Advisor - ' . APP_NAME,
+            'page_title' => 'AI Career Path Predictor'
+        ];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $skills = trim($_POST['skills'] ?? '');
+            
+            if (!empty($skills)) {
+                $aiService = new CareerAiService();
+                $prediction = $aiService->predict($skills);
+                $topMatches = $aiService->predictWithScores($skills);
+                
+                $data['prediction'] = $prediction;
+                $data['top_matches'] = $topMatches;
+                $data['user_skills'] = $skills;
+            } else {
+                $data['error'] = 'Please enter your skills to get a prediction.';
+            }
+        }
+
+        $this->view('student/ai-advisor', $data);
     }
 }
 ?>

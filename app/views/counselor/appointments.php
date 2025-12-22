@@ -78,12 +78,48 @@ function sanitize(?string $value): string
         </div>
     </div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0"><i class="fas fa-calendar-alt me-2 text-primary"></i>Appointments</h5>
-            <span class="badge bg-secondary">Total: <?= count($appointments ?? []) ?></span>
+    <?= CalendarHelper::getStyles() ?>
+
+    <!-- View Toggle Tabs -->
+    <ul class="nav nav-tabs mb-4" id="viewTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendarView" 
+                    type="button" role="tab">
+                <i class="fas fa-calendar-alt me-2"></i>Calendar View
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="list-tab" data-bs-toggle="tab" data-bs-target="#listView" 
+                    type="button" role="tab">
+                <i class="fas fa-list me-2"></i>List View
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="viewTabsContent">
+        <!-- Calendar View -->
+        <div class="tab-pane fade show active" id="calendarView" role="tabpanel">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                    <?php
+                    $month = $_GET['month'] ?? date('m');
+                    $year = $_GET['year'] ?? date('Y');
+                    $calendar = new CalendarHelper($year, $month);
+                    $calendar->setAppointments($appointments ?? []);
+                    echo $calendar->render(APP_URL . '/counselor/appointments?status=' . $currentStatus);
+                    ?>
+                </div>
+            </div>
         </div>
-        <div class="card-body p-0">
+
+        <!-- List View -->
+        <div class="tab-pane fade" id="listView" role="tabpanel">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2 text-primary"></i>Appointments</h5>
+                    <span class="badge bg-secondary">Total: <?= count($appointments ?? []) ?></span>
+                </div>
+                <div class="card-body p-0">
             <?php if (!empty($appointments)): ?>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -159,8 +195,10 @@ function sanitize(?string $value): string
                     <p class="text-muted">Try choosing a different status or check back later.</p>
                 </div>
             <?php endif; ?>
-        </div>
-    </div>
+                </div>
+            </div>
+        </div><!-- End List View Tab -->
+    </div><!-- End Tab Content -->
 </div>
 
 <?php

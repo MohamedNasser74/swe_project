@@ -228,5 +228,156 @@ class AdminController extends Controller
 
         $this->redirect('admin/appointments');
     }
+
+    /**
+     * Menu Management - List all menus
+     */
+    public function menus()
+    {
+        $this->requireRole('admin');
+        
+        $menuModel = $this->model('Menu');
+        $menus = $menuModel->getAllMenus();
+        
+        $data = [
+            'title' => 'Menu Management - ' . APP_NAME,
+            'page_title' => 'Menu Management',
+            'menus' => $menus
+        ];
+        
+        $this->view('admin/menus', $data);
+    }
+
+    /**
+     * Create new menu item
+     */
+    public function createMenu()
+    {
+        $this->requireRole('admin');
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('admin/menus');
+            return;
+        }
+        
+        $title = ValidationHelper::sanitize($_POST['title'] ?? '');
+        $url = ValidationHelper::sanitize($_POST['url'] ?? '');
+        $icon = ValidationHelper::sanitize($_POST['icon'] ?? '');
+        $parentId = !empty($_POST['parent_id']) ? (int)$_POST['parent_id'] : null;
+        $sortOrder = (int)($_POST['sort_order'] ?? 0);
+        $roleAccess = $_POST['role_access'] ?? 'all';
+        $isActive = isset($_POST['is_active']) ? 1 : 0;
+        
+        $validator = new ValidationHelper();
+        $validator->validate('title', $title, 'Title')->required()->maxLength(100);
+        $validator->validate('url', $url, 'URL')->required()->maxLength(255);
+        $validator->validate('role_access', $roleAccess, 'Role Access')
+            ->in(['all', 'guest', 'student', 'counselor', 'admin']);
+        
+        if ($validator->hasErrors()) {
+            $this->setFlash('error', implode(' ', $validator->getAllErrorMessages()));
+            $this->redirect('admin/menus');
+            return;
+        }
+        
+        $menuModel = $this->model('Menu');
+        $data = [
+            'title' => $title,
+            'url' => $url,
+            'icon' => $icon ?: null,
+            'parent_id' => $parentId,
+            'sort_order' => $sortOrder,
+            'role_access' => $roleAccess,
+            'is_active' => $isActive
+        ];
+        
+        if ($menuModel->createMenu($data)) {
+            $this->setFlash('success', 'Menu item created successfully.');
+        } else {
+            $this->setFlash('error', 'Failed to create menu item.');
+        }
+        
+        $this->redirect('admin/menus');
+    }
+
+    /**
+     * Update menu item
+     */
+    public function updateMenu($menuId = null)
+    {
+        $this->requireRole('admin');
+        
+        if (!$menuId || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('admin/menus');
+            return;
+        }
+        
+        $title = ValidationHelper::sanitize($_POST['title'] ?? '');
+        $url = ValidationHelper::sanitize($_POST['url'] ?? '');
+        $icon = ValidationHelper::sanitize($_POST['icon'] ?? '');
+        $parentId = !empty($_POST['parent_id']) ? (int)$_POST['parent_id'] : null;
+        $sortOrder = (int)($_POST['sort_order'] ?? 0);
+        $roleAccess = $_POST['role_access'] ?? 'all';
+        $isActive = isset($_POST['is_active']) ? 1 : 0;
+        
+        // Prevent circular reference
+        if ($parentId == $menuId) {
+            $this->setFlash('error', 'A menu item cannot be its own parent.');
+            $this->redirect('admin/menus');
+            return;
+        }
+        
+        $validator = new ValidationHelper();
+        $validator->validate('title', $title, 'Title')->required()->maxLength(100);
+        $validator->validate('url', $url, 'URL')->required()->maxLength(255);
+        
+        if ($validator->hasErrors()) {
+            $this->setFlash('error', implode(' ', $validator->getAllErrorMessages()));
+            $this->redirect('admin/menus');
+            return;
+        }
+        
+        $menuModel = $this->model('Menu');
+        $data = [
+            'title' => $title,
+            'url' => $url,
+            'icon' => $icon ?: null,
+            'parent_id' => $parentId,
+            'sort_order' => $sortOrder,
+            'role_access' => $roleAccess,
+            'is_active' => $isActive
+        ];
+        
+        if ($menuModel->updateMenu($menuId, $data)) {
+            $this->setFlash('success', 'Menu item updated successfully.');
+        } else {
+            $this->setFlash('error', 'Failed to update menu item.');
+        }
+        
+        $this->redirect('admin/menus');
+    }
+
+    /**
+     * Delete menu item
+     */
+    public function deleteMenu($menuId = null)
+    {
+        $this->requireRole('admin');
+        
+        if (!$menuId || $_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('admin/menus');
+            return;
+        }
+        
+        $menuModel = $this->model('Menu');
+        
+        if ($menuModel->deleteMenu($menuId)) {
+            $this->setFlash('success', 'Menu item deleted successfully.');
+        } else {
+            $this->setFlash('error', 'Failed to delete menu item.');
+        }
+        
+        $this->redirect('admin/menus');
+    }
 }
 ?>

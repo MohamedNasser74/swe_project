@@ -170,9 +170,6 @@
                         <a href="<?= APP_URL ?>/counselor/students" class="btn btn-outline-info">
                             <i class="fas fa-users me-2"></i>My Students
                         </a>
-                        <a href="<?= APP_URL ?>/counselor/resources" class="btn btn-outline-secondary">
-                            <i class="fas fa-book me-2"></i>Resources
-                        </a>
                     </div>
                 </div>
             </div>

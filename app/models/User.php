@@ -171,5 +171,16 @@ class User extends Model
         
         return $this->db->execute();
     }
+
+    /**
+     * Find user by ID
+     */
+    public function getUserById($id)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE id = :id";
+        $this->db->query($sql);
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
 }
 ?>

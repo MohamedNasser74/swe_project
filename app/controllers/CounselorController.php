@@ -214,12 +214,5 @@ class CounselorController extends Controller
 
         $this->redirect('counselor/profile');
     }
-
-    public function resources()
-    {
-        $this->requireRole('counselor');
-        header('Location: ' . APP_URL . '/resources.php');
-        exit;
-    }
 }
 ?>

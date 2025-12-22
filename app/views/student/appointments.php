@@ -1,5 +1,7 @@
 <?php ob_start(); ?>
 
+<?= CalendarHelper::getStyles() ?>
+
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center py-3 mb-4 border-bottom">
         <div>
@@ -11,15 +13,48 @@
         </a>
     </div>
 
-    <!-- Appointments List -->
-    <div class="card">
-        <div class="card-header">
-            <h5 class="mb-0">
-                <i class="fas fa-calendar-check me-2"></i>
-                Your Appointments
-            </h5>
+    <!-- View Toggle Tabs -->
+    <ul class="nav nav-tabs mb-4" id="viewTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendarView" 
+                    type="button" role="tab">
+                <i class="fas fa-calendar-alt me-2"></i>Calendar View
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="list-tab" data-bs-toggle="tab" data-bs-target="#listView" 
+                    type="button" role="tab">
+                <i class="fas fa-list me-2"></i>List View
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="viewTabsContent">
+        <!-- Calendar View -->
+        <div class="tab-pane fade show active" id="calendarView" role="tabpanel">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <?php
+                    $month = $_GET['month'] ?? date('m');
+                    $year = $_GET['year'] ?? date('Y');
+                    $calendar = new CalendarHelper($year, $month);
+                    $calendar->setAppointments($appointments ?? []);
+                    echo $calendar->render(APP_URL . '/student/appointments');
+                    ?>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
+
+        <!-- List View -->
+        <div class="tab-pane fade" id="listView" role="tabpanel">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-calendar-check me-2"></i>
+                        Your Appointments
+                    </h5>
+                </div>
+                <div class="card-body">
             <?php if (!empty($appointments)): ?>
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -88,8 +123,10 @@
                     </a>
                 </div>
             <?php endif; ?>
-        </div>
-    </div>
+                </div>
+            </div>
+        </div><!-- End List View Tab -->
+    </div><!-- End Tab Content -->
 </div>
 
 <script>

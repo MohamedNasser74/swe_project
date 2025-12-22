@@ -114,5 +114,80 @@ class Menu extends Model
     {
         return $this->delete($this->table, $id);
     }
+
+    /**
+     * Get all menus for admin management (including inactive)
+     */
+    public function getAllMenus()
+    {
+        $sql = "SELECT m.*, p.title as parent_title 
+                FROM {$this->table} m
+                LEFT JOIN {$this->table} p ON m.parent_id = p.id
+                ORDER BY m.sort_order ASC, m.id ASC";
+        $this->db->query($sql);
+        return $this->db->resultSet();
+    }
+
+    /**
+     * Get single menu by ID
+     */
+    public function getMenuById($id)
+    {
+        $sql = "SELECT * FROM {$this->table} WHERE id = :id";
+        $this->db->query($sql);
+        $this->db->bind(':id', $id);
+        return $this->db->single();
+    }
+
+    /**
+     * Create menu (alias for createMenuItem)
+     */
+    public function createMenu($data)
+    {
+        $sql = "INSERT INTO {$this->table} (title, url, icon, parent_id, sort_order, role_access, is_active) 
+                VALUES (:title, :url, :icon, :parent_id, :sort_order, :role_access, :is_active)";
+        $this->db->query($sql);
+        $this->db->bind(':title', $data['title']);
+        $this->db->bind(':url', $data['url']);
+        $this->db->bind(':icon', $data['icon']);
+        $this->db->bind(':parent_id', $data['parent_id']);
+        $this->db->bind(':sort_order', $data['sort_order']);
+        $this->db->bind(':role_access', $data['role_access']);
+        $this->db->bind(':is_active', $data['is_active']);
+        return $this->db->execute();
+    }
+
+    /**
+     * Update menu (alias for updateMenuItem)
+     */
+    public function updateMenu($id, $data)
+    {
+        $sql = "UPDATE {$this->table} 
+                SET title = :title, url = :url, icon = :icon, parent_id = :parent_id, 
+                    sort_order = :sort_order, role_access = :role_access, is_active = :is_active,
+                    updated_at = NOW()
+                WHERE id = :id";
+        $this->db->query($sql);
+        $this->db->bind(':id', $id);
+        $this->db->bind(':title', $data['title']);
+        $this->db->bind(':url', $data['url']);
+        $this->db->bind(':icon', $data['icon']);
+        $this->db->bind(':parent_id', $data['parent_id']);
+        $this->db->bind(':sort_order', $data['sort_order']);
+        $this->db->bind(':role_access', $data['role_access']);
+        $this->db->bind(':is_active', $data['is_active']);
+        return $this->db->execute();
+    }
+
+    /**
+     * Delete menu (alias for deleteMenuItem)
+     */
+    public function deleteMenu($id)
+    {
+        $sql = "DELETE FROM {$this->table} WHERE id = :id";
+        $this->db->query($sql);
+        $this->db->bind(':id', $id);
+        return $this->db->execute();
+    }
 }
 ?>

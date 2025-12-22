@@ -133,10 +133,10 @@
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body text-center p-4">
                         <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                            <i class="fas fa-search fa-2x"></i>
+                            <i class="fas fa-robot fa-2x"></i>
                         </div>
-                        <h5 class="fw-bold mb-3">Job Search Tools</h5>
-                        <p class="text-muted">Access curated job listings, get personalized recommendations, and track your applications all in one place.</p>
+                        <h5 class="fw-bold mb-3">AI Career Predictor</h5>
+                        <p class="text-muted">Discover your ideal career path using our machine learning-based predictor that analyzes your skills and recommends roles.</p>
                     </div>
                 </div>
             </div>

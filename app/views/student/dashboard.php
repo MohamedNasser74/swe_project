@@ -15,7 +15,7 @@
 
     <!-- Quick Actions Row -->
     <div class="row g-4 mb-4 justify-content-center">
-        <div class="col-lg-5 col-md-6">
+        <div class="col-lg-4 col-md-6">
             <a href="<?= APP_URL ?>/student/book-appointment" class="card text-decoration-none h-100 border-2 border-primary">
                 <div class="card-body text-center">
                     <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
@@ -27,17 +27,19 @@
             </a>
         </div>
         
-        <div class="col-lg-5 col-md-6">
-            <a href="<?= APP_URL ?>/student/job-search" class="card text-decoration-none h-100 border-2 border-info">
+        <div class="col-lg-4 col-md-6">
+            <a href="<?= APP_URL ?>/student/aiAdvisor" class="card text-decoration-none h-100 border-2 border-success">
                 <div class="card-body text-center">
-                    <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
-                        <i class="fas fa-search fa-lg"></i>
+                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <i class="fas fa-robot fa-lg"></i>
                     </div>
-                    <h5 class="card-title text-info">Job Search</h5>
-                    <p class="text-muted small mb-0">Find your dream job</p>
+                    <h5 class="card-title text-success">AI Career Predictor</h5>
+                    <p class="text-muted small mb-0">Discover your ideal career path</p>
                 </div>
             </a>
         </div>
+        
+
     </div>
 
     <!-- Main Content Row -->
@@ -187,14 +189,7 @@
                                 <a href="<?= APP_URL ?>/student/interview-tips" class="btn btn-outline-success btn-sm">Learn More</a>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="text-center">
-                                <i class="fas fa-briefcase fa-2x text-primary mb-2"></i>
-                                <h6>Job Opportunities</h6>
-                                <p class="text-muted small">Find your next role</p>
-                                <a href="<?= APP_URL ?>/student/job-opportunities" class="btn btn-outline-primary btn-sm">Search Jobs</a>
-                            </div>
-                        </div>
+
                         <div class="col-md-4">
                             <div class="text-center">
                                 <i class="fas fa-certificate fa-2x text-info mb-2"></i>

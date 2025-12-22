@@ -306,6 +306,120 @@ if ($results['failed'] > 0) {
 echo '</div>';
 
 // ==========================================
+// TEST SUITE 5: ValidationHelper Class Tests
+// ==========================================
+echo '<div class="test-section">';
+echo '<h3><i class="fas fa-check-double me-2"></i>ValidationHelper Class Tests</h3>';
+$test = new SimpleTestRunner();
+
+// Test 1: Email validation with ValidationHelper
+$validator = new ValidationHelper();
+$validator->validate('email', 'user@example.com')->email();
+$test->assertTrue($validator->isValid(), 'Valid email should pass ValidationHelper');
+
+$validator->clearErrors();
+$validator->validate('email', 'invalid-email')->email();
+$test->assertTrue($validator->hasErrors(), 'Invalid email should fail ValidationHelper');
+
+// Test 2: Required field validation
+$validator->clearErrors();
+$validator->validate('name', '')->required();
+$test->assertTrue($validator->hasErrors(), 'Empty required field should fail');
+
+$validator->clearErrors();
+$validator->validate('name', 'John')->required();
+$test->assertTrue($validator->isValid(), 'Non-empty required field should pass');
+
+// Test 3: MinLength validation
+$validator->clearErrors();
+$validator->validate('password', '123')->minLength(6);
+$test->assertTrue($validator->hasErrors(), 'Short password should fail minLength');
+
+$validator->clearErrors();
+$validator->validate('password', '123456')->minLength(6);
+$test->assertTrue($validator->isValid(), 'Valid password should pass minLength');
+
+// Test 4: MaxLength validation
+$validator->clearErrors();
+$validator->validate('username', 'a_very_long_username_that_exceeds_limit')->maxLength(20);
+$test->assertTrue($validator->hasErrors(), 'Long username should fail maxLength');
+
+// Test 5: Matches validation (password confirmation)
+$validator->clearErrors();
+$validator->validate('confirm_password', 'password123')->matches('different_password', 'Password');
+$test->assertTrue($validator->hasErrors(), 'Non-matching passwords should fail');
+
+$validator->clearErrors();
+$validator->validate('confirm_password', 'password123')->matches('password123', 'Password');
+$test->assertTrue($validator->isValid(), 'Matching passwords should pass');
+
+// Test 6: In array validation (roles)
+$validator->clearErrors();
+$validator->validate('role', 'hacker')->in(['student', 'counselor']);
+$test->assertTrue($validator->hasErrors(), 'Invalid role should fail');
+
+$validator->clearErrors();
+$validator->validate('role', 'student')->in(['student', 'counselor']);
+$test->assertTrue($validator->isValid(), 'Valid role should pass');
+
+// Test 7: Phone validation
+$validator->clearErrors();
+$validator->validate('phone', '123')->phone();
+$test->assertTrue($validator->hasErrors(), 'Short phone should fail');
+
+$validator->clearErrors();
+$validator->validate('phone', '+1234567890')->phone();
+$test->assertTrue($validator->isValid(), 'Valid phone should pass');
+
+// Test 8: Future date validation
+$validator->clearErrors();
+$validator->validate('date', date('Y-m-d', strtotime('-1 day')))->futureDate();
+$test->assertTrue($validator->hasErrors(), 'Past date should fail futureDate');
+
+$validator->clearErrors();
+$validator->validate('date', date('Y-m-d', strtotime('+1 day')))->futureDate();
+$test->assertTrue($validator->isValid(), 'Future date should pass futureDate');
+
+// Test 9: Username format validation
+$validator->clearErrors();
+$validator->validate('username', 'user@name')->username();
+$test->assertTrue($validator->hasErrors(), 'Username with @ should fail');
+
+$validator->clearErrors();
+$validator->validate('username', 'john_doe123')->username();
+$test->assertTrue($validator->isValid(), 'Valid username should pass');
+
+// Test 10: Sanitize static method
+$dirtyInput = '<script>alert("xss")</script>Hello';
+$cleanInput = ValidationHelper::sanitize($dirtyInput);
+$test->assertFalse(strpos($cleanInput, '<script>') !== false, 'Sanitize should escape script tags');
+$test->assertContains('Hello', $cleanInput, 'Sanitize should preserve text');
+
+// Test 11: Chained validations
+$validator->clearErrors();
+$validator->validate('email', 'test@test.com')
+    ->required()
+    ->email()
+    ->maxLength(100);
+$test->assertTrue($validator->isValid(), 'Chained valid validations should pass');
+
+// Test 12: Multiple field validation
+$validator->clearErrors();
+$validator->validate('username', 'john_doe')->required()->username();
+$validator->validate('email', 'john@example.com')->required()->email();
+$validator->validate('password', 'SecurePass1!')->required()->minLength(8);
+$test->assertTrue($validator->isValid(), 'Multiple valid fields should pass');
+
+$results = $test->getResults();
+$allPassed += $results['passed'];
+$allFailed += $results['failed'];
+echo "<p class='test-pass'><i class='fas fa-check-circle me-1'></i>{$results['passed']} tests passed</p>";
+if ($results['failed'] > 0) {
+    echo "<p class='test-fail'><i class='fas fa-times-circle me-1'></i>{$results['failed']} tests failed</p>";
+}
+echo '</div>';
+
+// ==========================================
 // SUMMARY
 // ==========================================
 $total = $allPassed + $allFailed;

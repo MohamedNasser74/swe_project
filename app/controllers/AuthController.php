@@ -99,33 +99,64 @@ class AuthController extends Controller
                 return;
             }
 
-            $username = trim($_POST['username'] ?? '');
-            $email = trim($_POST['email'] ?? '');
+            // Sanitize inputs
+            $username = ValidationHelper::sanitize($_POST['username'] ?? '');
+            $email = ValidationHelper::sanitize($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirm_password'] ?? '';
-            $firstName = trim($_POST['first_name'] ?? '');
-            $lastName = trim($_POST['last_name'] ?? '');
+            $firstName = ValidationHelper::sanitize($_POST['first_name'] ?? '');
+            $lastName = ValidationHelper::sanitize($_POST['last_name'] ?? '');
             $role = $_POST['role'] ?? 'student';
-            $phone = trim($_POST['phone'] ?? '');
+            $phone = ValidationHelper::sanitize($_POST['phone'] ?? '');
 
-            // Validate inputs
-            $errors = [];
-            if (empty($username)) $errors[] = 'Username is required';
-            if (strlen($username) < 3) $errors[] = 'Username must be at least 3 characters';
-            if (empty($email)) $errors[] = 'Email is required';
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = 'Valid email is required';
-            if (empty($password)) $errors[] = 'Password is required';
-            if (strlen($password) < 8) $errors[] = 'Password must be at least 8 characters';
-            if (!preg_match('/[A-Z]/', $password)) $errors[] = 'Password must contain at least one uppercase letter';
-            if (!preg_match('/[a-z]/', $password)) $errors[] = 'Password must contain at least one lowercase letter';
-            if (!preg_match('/[^A-Za-z0-9]/', $password)) $errors[] = 'Password must contain at least one special character';
-            if ($password !== $confirmPassword) $errors[] = 'Passwords do not match';
-            if (empty($firstName)) $errors[] = 'First name is required';
-            if (empty($lastName)) $errors[] = 'Last name is required';
-            if (!in_array($role, ['student', 'counselor'])) $errors[] = 'Invalid role selected';
+            // Use ValidationHelper for centralized validation
+            $validator = new ValidationHelper();
+            
+            $validator->validate('username', $username, 'Username')
+                ->required()
+                ->minLength(3)
+                ->maxLength(50)
+                ->username();
+            
+            $validator->validate('email', $email, 'Email')
+                ->required()
+                ->email()
+                ->maxLength(100);
+            
+            $validator->validate('password', $password, 'Password')
+                ->required()
+                ->minLength(8)
+                ->regex('/[A-Z]/', 'Password must contain at least one uppercase letter')
+                ->regex('/[a-z]/', 'Password must contain at least one lowercase letter')
+                ->regex('/[^A-Za-z0-9]/', 'Password must contain at least one special character');
+            
+            $validator->validate('confirm_password', $confirmPassword, 'Confirm Password')
+                ->required()
+                ->matches($password, 'Password');
+            
+            $validator->validate('first_name', $firstName, 'First name')
+                ->required()
+                ->maxLength(50);
+            
+            $validator->validate('last_name', $lastName, 'Last name')
+                ->required()
+                ->maxLength(50);
+            
+            $validator->validate('role', $role, 'Role')
+                ->required()
+                ->in(['student', 'counselor']);
+            
+            // Optional: Validate phone if provided
+            if (!empty($phone)) {
+                $validator->validate('phone', $phone, 'Phone')
+                    ->phone();
+            }
 
-            // Check if username/email already exists
-            if (empty($errors)) {
+            // Get validation errors
+            $errors = $validator->getAllErrorMessages();
+
+            // Check if username/email already exists (only if no validation errors)
+            if ($validator->isValid()) {
                 if ($this->userModel->findByUsername($username)) {
                     $errors[] = 'Username already exists';
                 }
