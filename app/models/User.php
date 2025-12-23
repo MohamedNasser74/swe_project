@@ -89,9 +89,9 @@ class User extends Model
     }
 
     /**
-     * Get all users with optional role/status filters
+     * Get all users with optional role filters
      */
-    public function getAllUsers($role = null, $status = null)
+    public function getAllUsers($role = null)
     {
         $conditions = [];
         $params = [];
@@ -99,11 +99,6 @@ class User extends Model
         if ($role !== null && $role !== '') {
             $conditions[] = "role = :role";
             $params[':role'] = $role;
-        }
-
-        if ($status !== null && $status !== '') {
-            $conditions[] = "status = :status";
-            $params[':status'] = $status;
         }
 
         $sql = "SELECT * FROM {$this->table}";

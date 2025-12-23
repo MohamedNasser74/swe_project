@@ -61,14 +61,12 @@ class AdminController extends Controller
         $this->requireRole('admin');
 
         $role = $_GET['role'] ?? '';
-        $status = $_GET['status'] ?? '';
 
-        $users = $this->userModel->getAllUsers($role, $status);
+        $users = $this->userModel->getAllUsers($role);
         $totalUsers = $this->userModel->count('users', 
             trim(
                 implode(' AND ', array_filter([
                     $role !== '' ? "role = '" . addslashes($role) . "'" : '',
-                    $status !== '' ? "status = '" . addslashes($status) . "'" : '',
                 ]))
         ));
 
@@ -77,8 +75,7 @@ class AdminController extends Controller
             'page_title' => 'User Management',
             'users' => $users,
             'total_users' => $totalUsers,
-            'filter_role' => $role,
-            'filter_status' => $status
+            'filter_role' => $role
         ];
 
         $this->view('admin/users', $data);
@@ -170,11 +167,11 @@ class AdminController extends Controller
         $this->redirect('admin/users');
     }
 
-    public function toggleUserStatus($userId = null)
+    public function deleteUser($userId = null)
     {
         $this->requireRole('admin');
 
-        if (!$userId) {
+        if (!$userId || $_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect('admin/users');
         }
 
@@ -184,13 +181,16 @@ class AdminController extends Controller
             $this->redirect('admin/users');
         }
 
-        $currentStatus = $user->status ?? 'active';
-        $newStatus = $currentStatus === 'active' ? 'inactive' : 'active';
+        // Prevent deleting yourself
+        if ($user->id == $_SESSION['user_id']) {
+            $this->setFlash('error', 'You cannot delete your own account.');
+            $this->redirect('admin/users');
+        }
 
-        if ($this->userModel->update('users', ['status' => $newStatus], $userId)) {
-            $this->setFlash('success', 'User status updated to ' . $newStatus . '.');
+        if ($this->userModel->delete('users', $userId)) {
+            $this->setFlash('success', 'User deleted successfully.');
         } else {
-            $this->setFlash('error', 'Failed to update user status.');
+            $this->setFlash('error', 'Failed to delete user.');
         }
 
         $this->redirect('admin/users');

@@ -25,11 +25,6 @@
                     <option value="counselor" <?= ($filter_role ?? '') === 'counselor' ? 'selected' : '' ?>>Counselor</option>
                     <option value="admin" <?= ($filter_role ?? '') === 'admin' ? 'selected' : '' ?>>Admin</option>
                 </select>
-                <select name="status" class="form-select form-select-sm">
-                    <option value="">All Status</option>
-                    <option value="active" <?= ($filter_status ?? '') === 'active' ? 'selected' : '' ?>>Active</option>
-                    <option value="inactive" <?= ($filter_status ?? '') === 'inactive' ? 'selected' : '' ?>>Inactive</option>
-                </select>
                 <button class="btn btn-sm btn-primary" type="submit">
                     <i class="fas fa-filter me-1"></i>Filter
                 </button>
@@ -75,9 +70,9 @@
                                                 Update
                                             </button>
                                         </form>
-                                        <form method="post" action="<?= APP_URL ?>/admin/toggleUserStatus/<?= $user->id ?>" class="d-inline">
-                                            <button type="submit" class="btn btn-sm <?= ($user->status ?? 'active') === 'active' ? 'btn-outline-danger' : 'btn-outline-success' ?>">
-                                                <?= ($user->status ?? 'active') === 'active' ? 'Deactivate' : 'Activate' ?>
+                                        <form method="post" action="<?= APP_URL ?>/admin/deleteUser/<?= $user->id ?>" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this user? This cannot be undone.');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="fas fa-trash-alt"></i> Delete
                                             </button>
                                         </form>
                                     </td>
