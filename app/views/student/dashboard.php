@@ -180,8 +180,8 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-4">
+                    <div class="row g-4 justify-content-center">
+                        <div class="col-12 col-md-6 col-lg-5">
                             <div class="text-center">
                                 <i class="fas fa-handshake fa-2x text-success mb-2"></i>
                                 <h6>Interview Tips</h6>
@@ -190,7 +190,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-12 col-md-6 col-lg-5">
                             <div class="text-center">
                                 <i class="fas fa-certificate fa-2x text-info mb-2"></i>
                                 <h6>Skill Development</h6>

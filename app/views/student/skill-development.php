@@ -61,7 +61,6 @@
                             <i class="fas fa-check text-success me-2"></i>Cybersecurity
                         </li>
                     </ul>
-                    <button class="btn btn-primary w-100 mt-3">Explore Path</button>
                 </div>
             </div>
         </div>
@@ -90,7 +89,6 @@
                             <i class="fas fa-check text-success me-2"></i>Strategic Planning
                         </li>
                     </ul>
-                    <button class="btn btn-success w-100 mt-3">Explore Path</button>
                 </div>
             </div>
         </div>
@@ -119,7 +117,6 @@
                             <i class="fas fa-check text-success me-2"></i>Video Production
                         </li>
                     </ul>
-                    <button class="btn btn-info w-100 mt-3">Explore Path</button>
                 </div>
             </div>
         </div>
@@ -167,9 +164,8 @@
                             <span class="text-muted small">4.5 (320 reviews)</span>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
                         <span class="h5 text-success mb-0">$49.99</span>
-                        <button class="btn btn-outline-primary btn-sm">Learn More</button>
                     </div>
                 </div>
             </div>
@@ -209,9 +205,8 @@
                             <span class="text-muted small">4.8 (215 reviews)</span>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
                         <span class="h5 text-success mb-0">$59.99</span>
-                        <button class="btn btn-outline-success btn-sm">Learn More</button>
                     </div>
                 </div>
             </div>
@@ -251,9 +246,8 @@
                             <span class="text-muted small">4.9 (412 reviews)</span>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
                         <span class="h5 text-success mb-0">$44.99</span>
-                        <button class="btn btn-outline-info btn-sm">Learn More</button>
                     </div>
                 </div>
             </div>
@@ -292,9 +286,8 @@
                             <span class="text-muted small">4.6 (178 reviews)</span>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
                         <span class="h5 text-success mb-0">$54.99</span>
-                        <button class="btn btn-outline-warning btn-sm">Learn More</button>
                     </div>
                 </div>
             </div>
@@ -333,9 +326,8 @@
                             <span class="text-muted small">4.7 (534 reviews)</span>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
                         <span class="h5 text-success mb-0">$39.99</span>
-                        <button class="btn btn-outline-danger btn-sm">Learn More</button>
                     </div>
                 </div>
             </div>
@@ -374,9 +366,8 @@
                             <span class="text-muted small">4.8 (156 reviews)</span>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
                         <span class="h5 text-success mb-0">$64.99</span>
-                        <button class="btn btn-outline-secondary btn-sm">Learn More</button>
                     </div>
                 </div>
             </div>
