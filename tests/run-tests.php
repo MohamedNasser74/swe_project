@@ -6,21 +6,21 @@
  * Usage: Open in browser: http://localhost/swe-project/swe_project/tests/run-tests.php
  */
 
-// Set error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Suppress warnings for cleaner output
+error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+ini_set('display_errors', 0);
 
-// Define paths
-define('ROOT_PATH', dirname(__DIR__));
-define('APP_PATH', ROOT_PATH . '/app');
-define('PUBLIC_PATH', ROOT_PATH . '/public');
+// Define paths only if not already defined
+if (!defined('ROOT_PATH')) define('ROOT_PATH', dirname(__DIR__));
+if (!defined('APP_PATH')) define('APP_PATH', ROOT_PATH . '/app');
+if (!defined('PUBLIC_PATH')) define('PUBLIC_PATH', ROOT_PATH . '/public');
 
 // Start session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Load configuration
+// Load configuration (may define its own constants)
 require_once APP_PATH . '/config/config.php';
 
 // Autoload classes
@@ -106,16 +106,46 @@ class SimpleTestRunner
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        .test-pass { color: #198754; }
+        body { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); min-height: 100vh; }
+        .test-pass { color: #28a745; }
         .test-fail { color: #dc3545; }
-        .test-section { border-left: 4px solid #0d6efd; padding-left: 1rem; margin-bottom: 2rem; }
+        .test-section { 
+            background: #fff; 
+            border-radius: 12px; 
+            padding: 1.5rem; 
+            margin-bottom: 1.5rem; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .test-section h4 { 
+            border-bottom: 2px solid #e9ecef; 
+            padding-bottom: 0.75rem; 
+            margin-bottom: 1rem;
+        }
+        .header-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .stats-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .stats-number { font-size: 2.5rem; font-weight: bold; }
+        .badge-test { font-size: 0.85rem; padding: 0.5rem 1rem; }
     </style>
 </head>
-<body class="bg-light">
+<body>
 <div class="container py-5">
-    <div class="text-center mb-5">
-        <h1><i class="fas fa-flask me-2"></i>Automated Unit Tests</h1>
-        <p class="text-muted">Testing core functionality of <?= APP_NAME ?></p>
+    <!-- Header -->
+    <div class="header-card text-center">
+        <i class="fas fa-vial fa-3x mb-3"></i>
+        <h1 class="fw-bold mb-2">Automated Unit Tests</h1>
+        <p class="mb-0 opacity-75">Testing core functionality of <?= APP_NAME ?></p>
     </div>
 
 <?php
@@ -126,7 +156,7 @@ $allFailed = 0;
 // TEST SUITE 1: User Model Tests
 // ==========================================
 echo '<div class="test-section">';
-echo '<h3><i class="fas fa-user me-2"></i>User Model Tests</h3>';
+echo '<h4><i class="fas fa-user me-2"></i>User Model Tests</h4>';
 $test = new SimpleTestRunner();
 
 // Test 1: Email validation
@@ -171,7 +201,7 @@ echo '</div>';
 // TEST SUITE 2: Appointment Model Tests
 // ==========================================
 echo '<div class="test-section">';
-echo '<h3><i class="fas fa-calendar-check me-2"></i>Appointment Model Tests</h3>';
+echo '<h4><i class="fas fa-calendar-check me-2"></i>Appointment Model Tests</h4>';
 $test = new SimpleTestRunner();
 
 // Test 1: Session types
@@ -216,7 +246,7 @@ echo '</div>';
 // TEST SUITE 3: Menu Model Tests (Dynamic Menu / Self-Reference)
 // ==========================================
 echo '<div class="test-section">';
-echo '<h3><i class="fas fa-bars me-2"></i>Menu Model Tests (Self-Reference)</h3>';
+echo '<h4><i class="fas fa-bars me-2"></i>Menu Model Tests (Self-Reference)</h4>';
 $test = new SimpleTestRunner();
 
 // Test 1: Role access values
@@ -270,7 +300,7 @@ echo '</div>';
 // TEST SUITE 4: Validation Tests
 // ==========================================
 echo '<div class="test-section">';
-echo '<h3><i class="fas fa-shield-alt me-2"></i>Validation Tests</h3>';
+echo '<h4><i class="fas fa-shield-alt me-2"></i>Validation Tests</h4>';
 $test = new SimpleTestRunner();
 
 // Test 1: Required field validation
@@ -296,23 +326,8 @@ $test->assertContains("\\'", $escaped, 'SQL injection should be escaped');
 $test->assertTrue(preg_match('/^[a-zA-Z0-9_]+$/', 'john_doe') === 1, 'Valid username should pass');
 $test->assertFalse(preg_match('/^[a-zA-Z0-9_]+$/', 'user@name') === 1, 'Username with @ should fail');
 
-$results = $test->getResults();
-$allPassed += $results['passed'];
-$allFailed += $results['failed'];
-echo "<p class='test-pass'><i class='fas fa-check-circle me-1'></i>{$results['passed']} tests passed</p>";
-if ($results['failed'] > 0) {
-    echo "<p class='test-fail'><i class='fas fa-times-circle me-1'></i>{$results['failed']} tests failed</p>";
-}
-echo '</div>';
-
-// ==========================================
-// TEST SUITE 5: ValidationHelper Class Tests
-// ==========================================
-echo '<div class="test-section">';
-echo '<h3><i class="fas fa-check-double me-2"></i>ValidationHelper Class Tests</h3>';
-$test = new SimpleTestRunner();
-
-// Test 1: Email validation with ValidationHelper
+// ValidationHelper Class Tests (integrated)
+// Test 6: Email validation with ValidationHelper
 $validator = new ValidationHelper();
 $validator->validate('email', 'user@example.com')->email();
 $test->assertTrue($validator->isValid(), 'Valid email should pass ValidationHelper');
